@@ -1,0 +1,462 @@
+@import "function";
+@import "../common/var";
+
+/* Break-points
+ -------------------------- */
+@mixin res($key, $map: $--breakpoints) {
+	// 循环断点Map，如果存在则返回
+	@if map-has-key($map, $key) {
+		@media only screen and #{inspect(map-get($map, $key))} {
+			@content;
+		}
+	} @else {
+		@warn "Undefeined points: `#{$map}`";
+	}
+}
+
+/* Scrollbar
+ -------------------------- */
+@mixin scroll-bar {
+	$--scrollbar-thumb-background: #b4bccc;
+	$--scrollbar-track-background: #fff;
+
+	&::-webkit-scrollbar {
+		z-index: 11;
+		width: 6px;
+
+		&:horizontal {
+			height: 6px;
+		}
+
+		&-thumb {
+			border-radius: 5px;
+			width: 6px;
+			background: $--scrollbar-thumb-background;
+		}
+
+		&-corner {
+			background: $--scrollbar-track-background;
+		}
+
+		&-track {
+			background: $--scrollbar-track-background;
+
+			&-piece {
+				background: $--scrollbar-track-background;
+				width: 6px;
+			}
+		}
+	}
+}
+
+/* Placeholder
+ -------------------------- */
+@mixin placeholder {
+	&::-webkit-input-placeholder {
+		@content;
+	}
+
+	&::-moz-placeholder {
+		@content;
+	}
+
+	&:-ms-input-placeholder {
+		@content;
+	}
+}
+
+/* BEM
+ -------------------------- */
+@mixin b($block) {
+	$B: $namespace + "-" + $block !global;
+
+	.#{$B} {
+		@content;
+	}
+}
+
+@mixin e($element) {
+	$E: $element !global;
+	$selector: &;
+	$currentSelector: "";
+	@each $unit in $element {
+		$currentSelector: #{$currentSelector +
+			"." +
+			$B +
+			$element-separator +
+			$unit +
+			","};
+	}
+
+	@if hitAllSpecialNestRule($selector) {
+		@at-root {
+			#{$selector} {
+				#{$currentSelector} {
+					@content;
+				}
+			}
+		}
+	} @else {
+		@at-root {
+			#{$currentSelector} {
+				@content;
+			}
+		}
+	}
+}
+
+@mixin m($modifier) {
+	$selector: &;
+	$currentSelector: "";
+	@each $unit in $modifier {
+		$currentSelector: #{$currentSelector +
+			& +
+			$modifier-separator +
+			$unit +
+			","};
+	}
+
+	@at-root {
+		#{$currentSelector} {
+			@content;
+		}
+	}
+}
+
+@mixin configurable-m($modifier, $E-flag: false) {
+	$selector: &;
+	$interpolation: "";
+
+	@if $E-flag {
+		$interpolation: $element-separator + $E-flag;
+	}
+
+	@at-root {
+		#{$selector} {
+			.#{$B + $interpolation + $modifier-separator + $modifier} {
+				@content;
+			}
+		}
+	}
+}
+
+@mixin spec-selector(
+	$specSelector: "",
+	$element: $E,
+	$modifier: false,
+	$block: $B
+) {
+	$modifierCombo: "";
+
+	@if $modifier {
+		$modifierCombo: $modifier-separator + $modifier;
+	}
+
+	@at-root {
+		#{&}#{$specSelector}.#{$block
+			+ $element-separator
+			+ $element
+			+ $modifierCombo} {
+			@content;
+		}
+	}
+}
+
+@mixin meb($modifier: false, $element: $E, $block: $B) {
+	$selector: &;
+	$modifierCombo: "";
+
+	@if $modifier {
+		$modifierCombo: $modifier-separator + $modifier;
+	}
+
+	@at-root {
+		#{$selector} {
+			.#{$block + $element-separator + $element + $modifierCombo} {
+				@content;
+			}
+		}
+	}
+}
+
+@mixin when($state) {
+	@at-root {
+		&.#{$state-prefix + $state} {
+			@content;
+		}
+	}
+}
+
+@mixin extend-rule($name) {
+	@extend #{"%shared-" + $name};
+}
+
+@mixin share-rule($name) {
+	$rule-name: "%shared-" + $name;
+
+	@at-root #{$rule-name} {
+		@content;
+	}
+}
+
+@mixin pseudo($pseudo) {
+	@at-root #{&}#{":#{$pseudo}"} {
+		@content;
+	}
+}
+/*
+flex布局横向
+*/
+
+@mixin flex-row-s-s {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	justify-content: flex-start;
+	align-items: flex-start;
+}
+
+@mixin flex-row-s-e {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	justify-content: flex-start;
+	align-items: flex-end;
+}
+
+@mixin flex-row-s-c {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	justify-content: flex-start;
+	align-items: center;
+}
+
+//
+@mixin flex-row-e-s {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	justify-content: flex-end;
+	align-items: flex-start;
+}
+
+@mixin flex-row-e-e {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	justify-content: flex-end;
+	align-items: flex-end;
+}
+
+@mixin flex-row-e-c {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	justify-content: flex-end;
+	align-items: center;
+}
+
+//
+@mixin flex-row-c-s {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	justify-content: center;
+	align-items: flex-start;
+}
+
+@mixin flex-row-c-e {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	justify-content: center;
+	align-items: flex-end;
+}
+
+@mixin flex-row-c-c {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	justify-content: center;
+	align-items: center;
+}
+
+//
+@mixin flex-row-sb-s {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	justify-content: space-between;
+	align-items: flex-start;
+}
+
+@mixin flex-row-sb-e {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	justify-content: space-between;
+	align-items: flex-end;
+}
+
+@mixin flex-row-sb-c {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	justify-content: space-between;
+	align-items: center;
+}
+
+//
+@mixin flex-row-sa-s {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	justify-content: space-around;
+	align-items: flex-start;
+}
+
+@mixin flex-row-sa-e {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	justify-content: space-around;
+	align-items: flex-end;
+}
+
+@mixin flex-row-sa-c {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	justify-content: space-around;
+	align-items: center;
+}
+
+/*
+flex布局纵向
+*/
+
+//
+@mixin flex-col-s-s {
+	display: flex;
+	flex-direction: column;
+	flex-wrap: nowrap;
+	justify-content: flex-start;
+	align-items: flex-start;
+}
+
+@mixin flex-col-s-e {
+	display: flex;
+	flex-direction: column;
+	flex-wrap: nowrap;
+	justify-content: flex-start;
+	align-items: flex-end;
+}
+
+@mixin flex-col-s-c {
+	display: flex;
+	flex-direction: column;
+	flex-wrap: nowrap;
+	justify-content: flex-start;
+	align-items: center;
+}
+
+//
+@mixin flex-col-e-s {
+	display: flex;
+	flex-direction: column;
+	flex-wrap: nowrap;
+	justify-content: flex-end;
+	align-items: flex-start;
+}
+
+@mixin flex-col-e-e {
+	display: flex;
+	flex-direction: column;
+	flex-wrap: nowrap;
+	justify-content: flex-end;
+	align-items: flex-end;
+}
+
+@mixin flex-col-e-c {
+	display: flex;
+	flex-direction: column;
+	flex-wrap: nowrap;
+	justify-content: flex-end;
+	align-items: center;
+}
+
+//
+@mixin flex-col-c-s {
+	display: flex;
+	flex-direction: column;
+	flex-wrap: nowrap;
+	justify-content: center;
+	align-items: flex-start;
+}
+
+@mixin flex-col-c-e {
+	display: flex;
+	flex-direction: column;
+	flex-wrap: nowrap;
+	justify-content: center;
+	align-items: flex-end;
+}
+
+@mixin flex-col-c-c {
+	display: flex;
+	flex-direction: column;
+	flex-wrap: nowrap;
+	justify-content: center;
+	align-items: center;
+}
+
+//
+@mixin flex-col-sb-s {
+	display: flex;
+	flex-direction: column;
+	flex-wrap: nowrap;
+	justify-content: space-between;
+	align-items: flex-start;
+}
+
+@mixin flex-col-sb-e {
+	display: flex;
+	flex-direction: column;
+	flex-wrap: nowrap;
+	justify-content: space-between;
+	align-items: flex-end;
+}
+
+@mixin flex-col-sb-c {
+	display: flex;
+	flex-direction: column;
+	flex-wrap: nowrap;
+	justify-content: space-between;
+	align-items: center;
+}
+
+//
+@mixin flex-col-sa-s {
+	display: flex;
+	flex-direction: column;
+	flex-wrap: nowrap;
+	justify-content: space-around;
+	align-items: flex-start;
+}
+
+@mixin flex-col-sa-e {
+	display: flex;
+	flex-direction: column;
+	flex-wrap: nowrap;
+	justify-content: space-around;
+	align-items: flex-end;
+}
+
+@mixin flex-col-sa-c {
+	display: flex;
+	flex-direction: column;
+	flex-wrap: nowrap;
+	justify-content: space-around;
+	align-items: center;
+}

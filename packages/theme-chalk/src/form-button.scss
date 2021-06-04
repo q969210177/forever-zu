@@ -1,0 +1,14 @@
+@import "mixins/mixins";
+@import "common/var";
+
+@include b(form-button) {
+  position: absolute;
+  width: 100%;
+  // height:$--form-button-height ;
+  top: calc(100% - #{$--header-height});
+  left: 0;
+  border-top: 1px solid #EEEEEE;
+  padding: 8px 20px;
+  display: flex;
+  align-items: center;
+}

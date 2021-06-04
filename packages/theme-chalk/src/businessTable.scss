@@ -1,0 +1,57 @@
+@import "mixins/mixins";
+@import "common/var";
+
+@include b(businessTable) {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+
+  @include e(operation_box) {
+    width: 100%;
+    padding: 0 5px;
+    @include flex-row-sb-s;
+
+    //这个地方重置一下form的样式
+    .el-form-item--mini.el-form-item {
+      margin-bottom: 5px;
+    }
+
+    .el-form-item {
+      margin-bottom: 5px;
+    }
+
+    .el-row--flex {
+      flex-wrap: wrap;
+    }
+
+    @include e
+    
+    
+    
+    (form) {
+      max-width: calc(100% - 150px);
+    }
+
+    @include e(serach) {}
+  }
+
+  @include e(btn_group) {
+    width: 100%;
+    padding: 2px 4px;
+    @include flex-row-s-c;
+  }
+
+  @include e(main) {
+    width: 100%;
+    flex: 1;
+  }
+
+  @include e(pag) {
+    width: 100%;
+    height: 50px;
+    @include flex-row-c-c;
+  }
+
+  // form
+}
