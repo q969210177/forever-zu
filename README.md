@@ -69,8 +69,14 @@ For Vue 3.0, we recommend using [Element Plus](https://github.com/element-plus/e
 ```shell
 npm install element-ui -S
 ```
-
-## Quick Start
+### 使用 Quick Start
+```JavaScript
+import el from "forever-zu/lib/"
+Vue.use(el)
+Vue.use(el.FormCreate)
+import "forever-zu/lib/theme-chalk/index.css"
+```
+<!-- ## Quick Start
 ``` javascript
 import Vue from 'vue'
 import Element from 'element-ui'
@@ -86,7 +92,7 @@ import {
 
 Vue.component(Select.name, Select)
 Vue.component(Button.name, Button)
-```
+``` -->
 For more information, please refer to [Quick Start](http://element.eleme.io/#/en-US/component/quickstart) in our documentation.
 
 ## Browser Support
