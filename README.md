@@ -67,7 +67,7 @@ For Vue 3.0, we recommend using [Element Plus](https://github.com/element-plus/e
 
 ## Install
 ```shell
-npm install element-ui -S
+npm i -s forever-zu
 ```
 ### 使用 Quick Start
 ```JavaScript
