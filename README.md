@@ -1,6 +1,3 @@
-### 文档地址
-https://q969210177.github.io/foveverDoc/#/zh-CN/component/installation
-
 <p align="center">
   <img src="https://cdn.rawgit.com/ElemeFE/element/dev/element_logo.svg">
 </p>
@@ -70,16 +67,10 @@ For Vue 3.0, we recommend using [Element Plus](https://github.com/element-plus/e
 
 ## Install
 ```shell
-npm i -s forever-zu
+npm install element-ui -S
 ```
-### 使用 Quick Start
-```JavaScript
-import el from "forever-zu/lib/"
-Vue.use(el)
-Vue.use(el.FormCreate)
-import "forever-zu/lib/theme-chalk/index.css"
-```
-<!-- ## Quick Start
+
+## Quick Start
 ``` javascript
 import Vue from 'vue'
 import Element from 'element-ui'
@@ -95,7 +86,7 @@ import {
 
 Vue.component(Select.name, Select)
 Vue.component(Button.name, Button)
-``` -->
+```
 For more information, please refer to [Quick Start](http://element.eleme.io/#/en-US/component/quickstart) in our documentation.
 
 ## Browser Support
