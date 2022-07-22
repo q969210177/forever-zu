@@ -1,6 +1,5 @@
 ## BusinessTable 带搜索条件和分页的表格  所有el-table的参数我都可以接收并传递下去 
 ### 基础表格 
-基础的表格展示用法。 搜索条件看这里http://www.form-create.com/v2/guide/ 如果有一些搜索条件有问题 请直接联系我 或者iss给我提问
 :::demo
 ```html
   <template>
